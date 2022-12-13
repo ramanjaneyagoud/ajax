@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="demo"></div>
+
+    <!-- https://restcountries.com/v3.1/name/peru -->
+    <script>
+        //     let data=new XMLHttpRequest();
+        //     data.open("GET","https://restcountries.com/v3.1/name/peru");
+        //     data.send();
+
+        //     data.addEventListener("load",function(){
+        //         let value=JSON.parse(this.responseText);
+        //         console.log(value[0]);
+        //         myFunction(value[0]);
+        //     })
+        // function myFunction(value){
+        // let image=`<img src="${value.flags.png}" alt="">`
+        // document.getElementById("demo").innerHTML=image;
+        // }
+
+
+
+        $('.ferulic_facemask').click(function () {
+            if (jQuery(this).is(":checked")) {
+                jQuery.post('/cart/add.js', {
+                    quantity: parseInt(document.getElementById("ferulic_facemaskQty").value),
+                    id: ferulic_facemask.variant,
+                    properties: {
+                        bestseller: true
+                    }
+                });
+            }
+            else if (jQuery(this).is(":not(:checked)")) {
+                jQuery.post('/cart/change.js', {
+                    quantity: 0,
+                    id: ferulic_facemask.variant
+                });
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

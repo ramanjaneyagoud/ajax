@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="country"></div>
+
+    <style>
+        .country {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .country>div {
+            filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
+            background: lightgrey;
+            border-radius: 10px;
+        }
+
+        .country div img {
+            border-radius: 15px 15px 0 0;
+            width: 100%;
+        }
+
+        .countru {
+            font-weight: bold;
+            font-size: 25px;
+            padding: 15px;
+        }
+
+        .neighbour,
+        .neighbour img {
+            max-width: 280px;
+            width: 100%;
+        }
+    </style>
+    <script>
+        const country = document.querySelector(".country");
+
+        function renderCountry(data, className = "") {
+            const html = `
+            <div class="${className}">
+                <img src="${data.flags.png}" alt="${data.fifa}">
+                <div class="countru">${data.name.official}</div>
+            </div>
+            `;
+            country.insertAdjacentHTML('beforeend', html);
+        }
+
+        function renderCountryNeighbour(country) {
+            let request = new XMLHttpRequest();
+            request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
+            request.send();
+            request.addEventListener('load', function () {
+                let [data] = JSON.parse(this.responseText);
+                console.log(data);
+                renderCountry(data);
+
+                let neighbour = data.borders[0];
+                const request2 = new XMLHttpRequest();
+                request2.open('GET', `https://restcountries.com/v3.1/alpha/${neighbour}`);
+                request2.send();
+                request2.addEventListener('load', function () {
+                    let [data2] = JSON.parse(this.responseText);
+                    console.log(data2);
+                    renderCountry(data2, 'neighbour');
+                });
+            })
+        }
+
+        renderCountryNeighbour('india')
+    </script>
+</body>
+
+</html>
+
+
+
+
+<!-- 
+<script>
+    function planSectionPopup() {
+  $(".block_one.highlight:eq(1) .price_info img,.block_one.highlight:eq(2) .price_info img").attr('src','https://cdn.shopify.com/s/files/1/2028/2057/files/radio_unfilled_blue.svg?v=1666941052');
+
+$(".block_one.highlight.bestplan .price_info img").attr('src','https://cdn.shopify.com/s/files/1/2028/2057/files/radio-filled.png?v=1613725775');
+  
+        var planSectionhtml = $('#plan-chooser').html();
+        $('body').append(`<div id="popup_light" class="popup_white_content" style="display: none;"><div id="plan-chooser1">${planSectionhtml}</div></div><div id="popup_fade" class="popup_black_overlay" style="display: none;"></div>`);
+  
+        $('div.popup_white_content #plan-chooser1 .individual_plans.one_months div.product_line.keys ul').html('<li>Includes 3 Customized Products, Body Wash and Hyaluronic Acid Serum</li>')
+        $('div.popup_white_content #plan-chooser1 .individual_plans.three_months div.product_line.keys ul').html('<li>Includes 3 Customized Products and Body Wash</li>')
+        $('div.popup_white_content #plan-chooser .individual_plans:not(.one_months, .three_months) div.product_line.keys ul').html('<li>Includes: Customized Shampoo, Conditioner, Pro-Growth Hair Serum</li>');
+        $('div.popup_white_content #plan-chooser .choose_plan').addClass('container');
+        $('div.popup_white_content #plan-chooser .choose_plan').append(`<a class="popup_close" href="javascript:void(0)" onclick="document.getElementById('popup_light').style.display = 'none';document.getElementById('popup_fade').style.display = 'none'"><img src="https://cdn.shopify.com/s/files/1/2028/2057/files/popup-close.svg?v=1665985988"/></a>`);
+        $('div.checkout_cta, div.belcher div a.checkout_cta').on('click', function () {
+            $('#popup_light, #popup_fade').show(); 
+        });
+  $(".block_one.highlight").on('click',function(){
+    $(".block_one.highlight").removeClass('bestplan');
+    $(this).addClass('bestplan');
+    $(".block_one.highlight .price_info img").attr('src','https://cdn.shopify.com/s/files/1/2028/2057/files/radio_unfilled_blue.svg?v=1666941052');
+    $(".block_one.highlight.bestplan .price_info img").attr('src','https://cdn.shopify.com/s/files/1/2028/2057/files/radio-filled.png?v=1613725775');
+  });
+  $('div.checkout_cta a, a.checkout_cta').attr('href', 'javascript:void(0)');
+} 
+
+
+let intervwl = setInterval(() => {
+  if($('#plan-chooser').html()) {
+      clearInterval(intervwl);
+      planSectionPopup();
+  }
+}, 300);
+</script>
+
+
+<style>
+    body#hair-subscription.membership div.popup_white_content #plan-chooser .rte1{
+        background: none !important;
+        margin-top: 0;
+    }
+    div.popup_white_content #plan-chooser img.new_product {
+        display: none !important;
+    }
+    body#hair-subscription.membership div.popup_white_content #plan-chooser .choose_plan h2 {
+        color: #000000;
+        font-size: 18px !important;
+        line-height: 21px !important;
+        margin-bottom: 5px !important;
+    }
+    div.popup_white_content #plan-chooser .choose_plan p {
+        color: #00AA41;
+        font-size: 14px !important;
+        line-height: 16px !important;
+    }
+    div.popup_white_content #plan-chooser .read_more {
+        display: none;
+    }
+    div.popup_white_content #plan-chooser .individual_plans div.product_line.keys ul li {
+        background: none !important;
+        padding-left: 7px;
+    }
+    div.popup_white_content #plan-chooser .individual_plans .block_one.highlight {
+        min-height: auto;
+    }
+    div.popup_white_content #plan-chooser .individual_plans .product_line li {
+        color: #000000;
+        font-size: 14px !important;
+        line-height: 22px !important;
+        margin-top: 7px;
+        font-weight: 600;
+    }
+    .popup_white_content {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+        background-color: #fff;
+        z-index: 1002;
+        overflow: auto;
+        text-align: center;
+    }
+    .popup_black_overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        z-index: 1001;
+        -moz-opacity: .8;
+        opacity: .8;
+        filter: alpha(opacity=80);
+    }
+    div.popup_white_content #plan-chooser .individual_plans .block_one.highlight{
+        box-shadow: 0 0 13px #00000029 !important;
+    }
+    div.popup_white_content #plan-chooser a.popup_close {
+        position: absolute;
+        bottom: 10px;
+        right: 0;
+    }
+    div.popup_white_content #plan-chooser .choose_plan{
+        position: relative;
+        max-width: 1090px;
+        width: 100%;
+    }
+    @media (min-width: 768px) and (max-width: 1200px){
+        div.popup_white_content #plan-chooser .individual_plans .block_one.highlight{
+            min-height: 190px;
+        }
+    }
+    @media (max-width: 767px) {
+        body#hair-subscription.membership div.popup_white_content #plan-chooser .choose_plan h2 {
+            text-align: left !important;
+            padding: 0 0 5px!important;
+        }
+        div.popup_white_content #plan-chooser .choose_plan p {
+            text-align: left !important;
+        }
+        div.popup_white_content #plan-chooser a.popup_close {
+            bottom: 18px;
+          right: 15px;
+        }
+        div.popup_white_content {
+            height: 85%;
+            top:23%;
+        }
+    }
+</style> -->

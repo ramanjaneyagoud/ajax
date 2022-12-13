@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="countries"></div>
+    <button>Where Am I?</button>
+
+    <script>
+        const btn = document.querySelector("button");
+        const country = document.querySelector(".countries");
+        function renderCountry(data, className = "") {
+            const html = `
+            <div class="${className}">
+                <img src="${data.flags.png}" alt="${data.fifa}">
+                <div class="countru">${data.name.official}</div>
+            </div>
+            `;
+            country.insertAdjacentHTML('beforeend', html);
+        }
+        const getLocation = function () {
+            return new Promise(function (resolve, reject) {
+                navigator.geolocation.getCurrentPosition(resolve, reject)
+            })
+        }
+        const coOrds = function () {
+            getLocation()
+                .then(pos => {
+                    const { latitude: lat, longitude: lng } = pos.coords;
+                    // console.log(lat, lng);
+                    return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error(`Country not Found ${res.status}`)
+                    return res.json();
+                })
+                .then(data => {
+                    const country = data.country;
+                    return fetch(`https://restcountries.com/v3.1/name/${country}`)
+                })
+                .then(res => res.json())
+                .then(data => renderCountry(data))
+                .catch(err => {
+                    displayErr(err)
+                })
+        }
+        btn.addEventListener("click", coOrds);
+    </script>
+</body>
+
+</html>

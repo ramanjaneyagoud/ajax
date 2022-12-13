@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>Get Country</button>
+    <div class="country"></div>
+    <script>
+        const country = document.querySelector(".country");
+        function displayErr(msg) {
+            country.insertAdjacentText("beforeend", `Something went wrong, ${msg.message}`);
+        }
+        function renderCountry(data, className = "") {
+            const html = `
+            <div class="${className}">
+                <img src="${data.flags.png}" alt="${data.fifa}">
+                <div class="countru">${data.name.official}</div>
+            </div>
+            `;
+            country.insertAdjacentHTML('beforeend', html);
+        }
+
+
+        function getCountry(country) {
+            fetch(`https://restcountries.com/v3.1/name/${country}`)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Country not Found ${res.status}`)
+                    return res.json();
+                })
+                .then(data => {
+                    renderCountry(data[0])
+                    const neighbour = data[0].borders[0];
+                    if (!neighbour || neighbour == undefined) throw new Error("No borders were found");
+                    // const neighbour = "ram"
+
+                    return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`)
+                })
+                .then(res2 => {
+                    if (!res2.ok) throw new Error(`Country not Found ${res2.status}`)
+                    return res2.json();
+                })
+                .then(data2 => {
+                    console.log(data2);
+                    renderCountry(data2[0], 'neighbour')
+                })
+                .catch(err => displayErr(err))
+        }
+        document.querySelector("button").addEventListener("click", function () {
+            getCountry('australia');
+        })
+
+    </script>
+    <style>
+        .country {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .country>div {
+            filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
+            background: lightgrey;
+            border-radius: 10px;
+        }
+
+        .country div img {
+            border-radius: 15px 15px 0 0;
+            width: 100%;
+        }
+
+        .countru {
+            font-weight: bold;
+            font-size: 25px;
+            padding: 15px;
+        }
+
+        .neighbour,
+        .neighbour img {
+            max-width: 280px;
+            width: 100%;
+        }
+    </style>
+</body>
+
+</html>

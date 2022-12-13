@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        setTimeout(function () {
+            setCookie("vx_hair_membership", true, 1)
+            $('.extra_discount1').after('<p id="memberBenefits">View Membership Benefits</p>');
+            $('.membership1').after(`<div id="memberModal" class="modal fade"> <div class="modal-dialog modal-dialog-centered"> <div class="modal-content"> <div class="modal-body"> <button type="button" class="close" data-dismiss="modal"> <img src="https://cdn.shopify.com/s/files/1/0037/7690/5283/files/cross_symbol.png?v=1614361068"/> </button> <h3>Vedix Insider Member Benefits</h3><div class="benefits_block d-flex"> <div class="benefit"> <img src="https://cdn.shopify.com/s/files/1/0037/7690/5283/files/discount_badge.png?v=1644657810"/> <p>20% off on all purchases</p></div><div class="benefit"> <img src="https://cdn.shopify.com/s/files/1/0037/7690/5283/files/vip_batch.png?v=1644657810"/> <p>VIP access to new launches</p></div><div class="benefit"> <img src="https://cdn.shopify.com/s/files/1/0037/7690/5283/files/giftpack_box.png?v=1644657810"/> <p>Free gifts & offers</p></div><div class="benefit"> <img src="https://cdn.shopify.com/s/files/1/0037/7690/5283/files/costsdown_pack.png?v=1644657810"/> <p>Costs Rs.<strike>699</strike> 399 only!</p></div><div class="benefit"> <img src="https://cdn.shopify.com/s/files/1/0037/7690/5283/files/shipping_bus.png?v=1644657810"/> <p>Free shipping</p></div><div class="benefit"> <img src="https://cdn.shopify.com/s/files/1/0037/7690/5283/files/delivery_pack.png?v=1644657563"/> <p>Priority delivery in 2-4 days</p></div></div></div></div></div></div>`);
+            if ($('.existing-user').length) {
+                $('.membership1').after($('.existing-user').clone(true, true));
+                $('.existing-user')[0].remove();
+            }
+
+            $('#memberBenefits').click(function () {
+                $('#memberModal').modal('show');
+            });
+
+        }, 3500);
+    </script>
+
+    <style>
+        p#memberBenefits {
+            color: #E78371;
+            font-size: 14px;
+            line-height: 22px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        #checkout-wrapper #customer-info div#memberModal h3 {
+            font-size: 18px !important;
+            color: #414042 !important;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        #checkout-wrapper #customer-info div#memberModal h3+p {
+            text-align: center;
+            line-height: 20px;
+            margin: 5px 0;
+        }
+
+        .modal-body .benefits_block {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            text-align: center;
+            margin-top: 2em;
+            align-items: flex-start;
+        }
+
+        .modal-body .benefits_block .benefit img {
+            min-height: 48px;
+        }
+
+        .modal-body .benefits_block .benefit p {
+            font-size: 16px !important;
+            line-height: 20px !important;
+            margin: 10px 0 2.5em 0;
+        }
+
+        div#memberModal {
+            padding: 0 !important;
+        }
+
+        .existing-user {
+            padding: 5px 15px;
+            width: 90%;
+            margin: 5px auto;
+            max-width: 480px;
+        }
+
+        button.close {
+            opacity: 1;
+        }
+
+        .benefit img {
+            margin: 0 auto;
+        }
+
+        .benefit {
+            display: grid;
+            width: 130px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+
+</body>
+
+</html>

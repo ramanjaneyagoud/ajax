@@ -1,0 +1,138 @@
+// 594
+.popup {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    .popup_cover {
+        position: relative;
+        margin: auto;
+        padding: 0;
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: .4s;
+        animation-name: animatetop;
+        animation-duration: .4s;
+        border-radius: 8px;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        max-width: 350px;
+        background: #fff;
+        border: 1px solid #EDEDED;
+        filter: drop-shadow(0px 1px 4px #0000000D);
+
+        .popupcls {
+            position: absolute;
+            top: -30px;
+            right: 0px;
+            z-index: 9999;
+            opacity: 1;
+        }
+    }
+
+    h2 {
+        margin: 20px 25px 30px;
+        line-height: 28px;
+        font-weight: 700;
+        font-size: 18px;
+        color: #00afc8;
+        margin-top: 10px;
+        text-align: left;
+    }
+
+    .addonProductH2 {
+        margin: 0px auto !important;
+        padding-bottom: 5px !important;
+        color: #333333 !important;
+        font-size: 18px;
+        border-bottom: none;
+        line-height: 22px;
+        letter-spacing: 0.4px;
+    }
+
+    p.heading {
+        display: none;
+    }
+
+    .btn-modify {
+        background: #00afc8;
+        color: white;
+        padding: 9px 12px !important;
+        border-radius: 30px;
+        max-width: 250px !important;
+        width: 100%;
+        margin: 10px 20px 10px 20px !important;
+        border: 2px solid #00afc8;
+        font-weight: 500;
+    }
+
+    input[type="submit"] {
+        padding: 0px 16px !important;
+    }
+
+    #AddressProvinceNew {
+        -webkit-appearance: menulist-button !important;
+    }
+}
+
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 50%;
+        opacity: 1
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 50%;
+        opacity: 1
+    }
+}
+
+
+.popup_inner {
+    form {
+        margin-bottom: 20px;
+
+        .form-group {
+            label {
+                display: none;
+            }
+        }
+    }
+
+    .heading {
+        text-align: left;
+    }
+
+    input[type="date"] {
+        background: white;
+    }
+}
+
+//694
+// <img src="https://cdn.shopify.com/s/files/1/2028/2057/files/popup_close_ee1f5ba4-cb87-4bf5-bfce-6f952e48e4a3.svg?v=1668483193" />
+
+// 1321
+//  <button className="btn btn-modify" style= {`background: #EEEDF0;border: none;color: #333;}
+
+//  onClick= {
+//      this.props.closePopup
+//  }
+
+//  >Cancel</button>

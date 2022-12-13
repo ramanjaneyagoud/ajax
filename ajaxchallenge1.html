@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>Where Am I?</button>
+    <div id="demo"></div>
+    <script>
+        const button = document.querySelector("button");
+        const demo = document.querySelector("#demo");
+        function locationData(data) {
+            let html = `
+            <p>Hi, Below are i listed my address. </p>
+            <p>State: ${data.state}</p>
+            <p>City: ${data.city}</p>
+            `;
+            demo.insertAdjacentHTML("beforeend", html)
+        }
+        function whereAmI(lat, lang) {
+            fetch(`https://geocode.xyz/${lat},${lang}?geoit=json`)
+                .then(res => {
+                    // console.log(res);
+                    if (!res.ok) throw new Error(`Crossed the limit of Server Refresh Rate, ${res.status}`)
+                    return res.json()
+                })
+                .then(data => {
+                    // console.log(data);
+                    locationData(data)
+                    const capital = data.city;
+
+                    return fetch(`https://restcountries.com/v3.1/capital/${capital}`)
+                })
+                .then(res => {
+                    // console.log(res);
+                    if (!res.ok) throw new Error(`Crossed the limit of Server Refresh Rate, ${res.status}`)
+                    return res.json()
+                })
+                .then(data => {
+                    demo.insertAdjacentHTML("beforeend", `<p>${data[0].name.common}</p>`)
+                })
+                .catch(err => {
+                    demo.insertAdjacentHTML("beforeend", `<p>Something went wrong ${err.message}</p>`)
+                })
+        }
+        button.addEventListener("click", function () {
+            whereAmI(51.50354, -0.12768)
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>

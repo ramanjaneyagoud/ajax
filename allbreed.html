@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>All Breed Lists from https://dog.ceo/dog-api/</h1>
+    <select name="" id=""></select>
+
+    <h2>Selected Dog is: <span></span></h2>
+
+    <img src="" alt="">
+
+    <script>
+        const select = document.getElementsByTagName('select')[0];
+        const dogImg = document.querySelector('img');
+        const h2Span = document.querySelector('h2 span');
+
+
+
+        fetch('https://dog.ceo/api/breeds/list/all')
+            .then(res => res.json())
+            .then(data => {
+                let arr = Object.keys(data.message);
+                arr.forEach(function (el) {
+                    let option = `<option>${el}</option>`;
+                    // console.log(option);
+                    select.insertAdjacentHTML('beforeend', option)
+                })
+            })
+
+        select.addEventListener('change', function () {
+            const sVal = this.value;
+            fetch(`https://dog.ceo/api/breed/${sVal}/images/random`)
+                .then(res => res.json())
+                .then(data => {
+                    h2Span.innerHTML = sVal;
+                    dogImg.src = data.message;
+                })
+        })
+
+
+    </script>
+    <style>
+        img {
+            max-width: 400px;
+            height: 400px;
+        }
+    </style>
+</body>
+
+</html>

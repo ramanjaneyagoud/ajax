@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <nav>
+        <img src="https://www.udemy.com/staticx/udemy/images/v7/logo-udemy.svg" alt="">
+        <ul>
+            <li>Item</li>
+            <li>Item</li>
+            <li>Item</li>
+        </ul>
+    </nav>
+
+    <header id="header">
+        <h1>Hello Observer</h1>
+    </header>
+
+    <section class="section" id="section1">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+            Aldus PageMaker including versions of Lorem Ipsum.
+
+        </p>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+            Aldus PageMaker including versions of Lorem Ipsum.
+
+        </p>
+    </section>
+    <section class="section" id="section2">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+            Aldus PageMaker including versions of Lorem Ipsum.
+
+        </p>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+            Aldus PageMaker including versions of Lorem Ipsum.
+
+        </p>
+    </section>
+    <section class="section" id="section3">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+            Aldus PageMaker including versions of Lorem Ipsum.
+
+        </p>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+            Aldus PageMaker including versions of Lorem Ipsum.
+
+        </p>
+    </section>
+
+    <footer>
+        @Copyrights - 2022
+    </footer>
+
+
+    <script>
+        const header = document.getElementById('header');
+        const nav = document.querySelector('nav');
+
+        const stickyNav = function (entries) {
+            const [entry] = entries;
+            if (!entry.isIntersecting) nav.classList.add('sticky');
+            else nav.classList.remove('sticky');
+        }
+
+        const stickyOptions = {
+            root: null,
+            threshold: 0.1
+        }
+        const observer = new IntersectionObserver(stickyNav, stickyOptions);
+        observer.observe(header);
+
+
+
+
+        const sectionFunc = function (entries) {
+            const [entry] = entries;
+            if (!entry.isIntersecting) return;
+            entry.target.classList.remove('section-hidden');
+        }
+        const sectionOptions = {
+            root: null,
+            threshold: 0.15
+        }
+        const sectionObserver = new IntersectionObserver(sectionFunc, sectionOptions);
+
+
+        [...document.querySelectorAll('section')].forEach(function (el) {
+            sectionObserver.observe(el);
+            el.classList.add('section-hidden');
+        })
+    </script>
+
+    <style>
+        .sticky {
+            position: fixed;
+            left: 0;
+            right: 0;
+        }
+
+        nav img {
+            max-width: 110px;
+            width: 100%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            background: #f1f1f1;
+            padding: 10px;
+            transition: position 0.5s;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            flex: 0 0 200px;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        nav ul li {
+            cursor: pointer;
+        }
+
+        header {
+            background-color: #ddd;
+
+            padding: 200px 15px;
+        }
+
+        header h1 {
+            background-image: linear-gradient(to right, red, purple);
+            color: #fff;
+            max-width: 250px;
+            padding: 15px;
+        }
+
+        .section {
+            padding: 200px 15px;
+            background-image: linear-gradient(to bottom, orange, white, green);
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            text-align: center;
+            font-weight: 600;
+            padding: 15px;
+        }
+
+        section {
+            transition: all 1s;
+        }
+
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(8rem);
+        }
+    </style>
+</body>
+
+</html>
